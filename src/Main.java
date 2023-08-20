@@ -31,7 +31,7 @@ public class Main {
                 
 
             } else if (userInput == 5) {
-                return;
+
             }
             else{
                 System.out.println("Такой команды нет.");
