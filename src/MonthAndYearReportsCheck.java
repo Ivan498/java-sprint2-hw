@@ -1,5 +1,7 @@
 import java.awt.desktop.SystemEventListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MonthAndYearReportsCheck {
     public static boolean isFillYearlyReport(YearlyReport yearlyReport){
@@ -63,4 +65,7 @@ public class MonthAndYearReportsCheck {
         }
         return checkDoesNotMatch;
     }
+
+
 }
+

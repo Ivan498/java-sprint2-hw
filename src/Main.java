@@ -10,8 +10,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         List<String> stringTransactions = new ArrayList<>();
         MonthlyReport monthlyReport = new MonthlyReport();
-        InfoYearAndMounth infoYearAndMounth = new InfoYearAndMounth();
-        Transaction transaction = new Transaction();
+
         while(true){
             printMenu();
             int userInput  = scanner.nextInt();
