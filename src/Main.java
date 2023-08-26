@@ -1,45 +1,59 @@
+import model.MonthlyReport;
+import model.YearlyReport;
+import service.MonthAndYearReportsCheck;
+import service.ReportEngine;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        MonthAndYearReportsCheck monthAndYearReportsCheck = new MonthAndYearReportsCheck();
-        ReportEngine reportEngine = new ReportEngine();
-        FileReader reader = new FileReader();
         Scanner scanner = new Scanner(System.in);
-        List<String> stringTransactions = new ArrayList<>();
-        MonthlyReport monthlyReport = new MonthlyReport();
+        ReportEngine reportEngine = new ReportEngine();
+        YearlyReport yearlyReport = new YearlyReport();
+        List<MonthlyReport> monthlyReports = new ArrayList<>();
 
-        while(true){
+        while(true) {
             printMenu();
-            int userInput  = scanner.nextInt();
+            int userInput = scanner.nextInt();
             if(userInput == 1){
-                reportEngine.addMonthlyReportsList(reader);
+                monthlyReports = reportEngine.addMonthlyReportsList();
             } else if (userInput == 2) {
-                reportEngine.addYearlyReportsList(reader);
+                yearlyReport = reportEngine.addYearlyReportsList();
             } else if (userInput == 3) {
-
-                if(!monthAndYearReportsCheck.isFillYearlyReport(reportEngine.yearlyReport) || !monthAndYearReportsCheck.isFillMonthlyReports(reportEngine.monthlyReportsList)){
-                    System.out.println("Не сходятся отчёты");
-                }
-                else {
-                    System.out.println("Этот-и месяц-а не сходиться " + monthAndYearReportsCheck.reconciliationOfIncome(reportEngine.yearlyReport, reportEngine.monthlyReportsList));
+                if (!MonthAndYearReportsCheck.isFillYearlyReport(yearlyReport)
+                        || !MonthAndYearReportsCheck.isFillMonthlyReports(monthlyReports)
+                        && MonthAndYearReportsCheck.reconciliationOfIncome(yearlyReport, monthlyReports)
+                ) {
+                    System.out.println("Отчеты сходятся");
+                } else {
+                    System.out.println("Отчеты не сходятся!");
                 }
             } else if (userInput == 4) {
-                
-
+                for (MonthlyReport report: monthlyReports) {
+                    String maxProfit = report.profitableProductsOfTheMonth();
+                    String maxExpense = report.expensableProductsOfTheMonth();
+                    System.out.println("Название месяца: " + report.getMonth());
+                    System.out.println("Продукт с наибольшим профитом: " + maxProfit);
+                    System.out.println("Продукт с наибольшей растратой: " + maxExpense);
+                }
             } else if (userInput == 5) {
-
-            }
-            else{
+                System.out.println("Рассматриваемый год: 2021");
+                Map<String, Double> profitForMoths = yearlyReport.getMontlyProfit();
+                for (Map.Entry<String, Double> entry: profitForMoths.entrySet()) {
+                    System.out.println("Прибыль в месяце: " + entry.getKey() + " " + entry.getValue());
+                }
+                double middleExpense = yearlyReport.getMiddleExpense();
+                System.out.println("Средний расход за год: " + middleExpense);
+                double middleProfit = yearlyReport.getMiddleProfit();
+                System.out.println("Cредняя прибыль за год: " + middleProfit);
+            } else {
                 System.out.println("Такой команды нет.");
                 break;
             }
-
-
         }
-
     }
 
     public static void printMenu(){
