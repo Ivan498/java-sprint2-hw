@@ -62,13 +62,13 @@ public class MonthAndYearReportsCheck {
     }
 
     public static boolean reconciliationOfIncome(YearlyReport yearlyReport, List<MonthlyReport> monthlyReportList) {
-        boolean flag = true;
-        for (MonthlyReport monthlyReport : monthlyReportList) {
-            flag = flag && sumMounthlyIncome(monthlyReport) == yearlyIncome(yearlyReport,monthlyReport.getMonth());
+        if (yearlyReport != null && monthlyReportList != null) {
+            boolean flag = true;
+            for (MonthlyReport monthlyReport : monthlyReportList) {
+                flag = flag && sumMounthlyIncome(monthlyReport) == yearlyIncome(yearlyReport, monthlyReport.getMonth());
+            }
         }
-        return flag;
+        return false;
     }
-
-
 }
 
