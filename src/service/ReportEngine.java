@@ -11,9 +11,9 @@ public class ReportEngine {
 
     public List<MonthlyReport> addMonthlyReportsList() {
         List<MonthlyReport> list = new ArrayList<>();
-        list.add(convertToMonthlyReport(reader.readFileContents("m.202101.csv"), "01"));
-        list.add(convertToMonthlyReport(reader.readFileContents("m.202102.csv"), "02"));
-        list.add(convertToMonthlyReport(reader.readFileContents("m.202103.csv"), "03"));
+        list.add(convertToMonthlyReport(reader.readFileContents("m.202101.csv"), "Январь"));
+        list.add(convertToMonthlyReport(reader.readFileContents("m.202102.csv"), "Февраль"));
+        list.add(convertToMonthlyReport(reader.readFileContents("m.202103.csv"), "Март"));
         return list;
     }
 
