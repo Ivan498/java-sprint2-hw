@@ -22,7 +22,7 @@ public class MonthAndYearReportsCheck {
     }
 
     public static double sumMounthlyIncome(MonthlyReport monthlyReport){
-        double sumIncomeMounthly= 0;
+        double sumIncomeMounthly = 0;
         for (Transaction transaction : monthlyReport.getTransactions()) {
             if(!transaction.isExpense()){
                 sumIncomeMounthly += transaction.getQuantity() * transaction.getUnitPrice();
@@ -41,7 +41,7 @@ public class MonthAndYearReportsCheck {
         return sumExpensesMounthly;
     }
 
-    public static double yearlyIncome(YearlyReport yearlyReport,String month){
+    public static double yearlyIncome(YearlyReport yearlyReport, String month){
         double sumIncomeYearly = 0.0;
         for (MonthlyTransaction monthlyTransaction : yearlyReport.getMonthlyTransactions()) {
             if(!monthlyTransaction.isExpense() && monthlyTransaction.getMonth().equals(month)){
@@ -61,12 +61,14 @@ public class MonthAndYearReportsCheck {
         return sumExpensesYearly;
     }
 
-    public static boolean reconciliationOfIncome(YearlyReport yearlyReport, List<MonthlyReport> monthlyReportList) {
+    public static boolean isConverge(YearlyReport yearlyReport, List<MonthlyReport> monthlyReportList) {
         if (yearlyReport != null && monthlyReportList != null) {
             boolean flag = true;
             for (MonthlyReport monthlyReport : monthlyReportList) {
-                flag = flag && sumMounthlyIncome(monthlyReport) == yearlyIncome(yearlyReport, monthlyReport.getMonth());
+                flag = flag && sumMounthlyIncome(monthlyReport) == yearlyIncome(yearlyReport, monthlyReport.getMonth())
+                        && sumMounthlyExpenses(monthlyReport) == yearlyExpenses(yearlyReport, monthlyReport.getMonth());
             }
+            return flag;
         }
         return false;
     }

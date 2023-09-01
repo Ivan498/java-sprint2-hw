@@ -27,11 +27,11 @@ public class Main {
                 } else if (yearlyReport == null){
                     System.out.println("Годовой отчет не загружен!");
                 } else {
-                    if ((!MonthAndYearReportsCheck.isFillYearlyReport(yearlyReport)
-                            || !MonthAndYearReportsCheck.isFillMonthlyReports(monthlyReports))
-                            && MonthAndYearReportsCheck.reconciliationOfIncome(yearlyReport, monthlyReports)
+                    if (MonthAndYearReportsCheck.isFillYearlyReport(yearlyReport)
+                            && MonthAndYearReportsCheck.isFillMonthlyReports(monthlyReports)
+                            && MonthAndYearReportsCheck.isConverge(yearlyReport, monthlyReports)
                     ) {
-                        System.out.println("Отчеты сходятся");
+                        System.out.println("Отчеты сходятся!");
                     } else {
                         System.out.println("Отчеты не сходятся!");
                     }
@@ -53,12 +53,12 @@ public class Main {
                     System.out.println("Отчет по 2021 году");
                     Map<String, Double> profitForMoths = yearlyReport.getMontlyProfit();
                     for (Map.Entry<String, Double> entry: profitForMoths.entrySet()) {
-                        System.out.println("Месяц: " + entry.getKey() + " Прибыль: " + entry.getValue());
+                        System.out.println("Месяц: " + entry.getKey() + " Прибыль: " + entry.getValue().intValue());
                     }
                     Double middleExpense = yearlyReport.getMiddleExpense();
-                    System.out.println("Средний расход за год: " + middleExpense.intValue());
+                    System.out.println("Средний расход за месяц в год: " + middleExpense.intValue());
                     Double middleProfit = yearlyReport.getMiddleProfit();
-                    System.out.println("Cредняя прибыль за год: " + middleProfit.intValue());
+                    System.out.println("Cредняя прибыль за месяц в год: " + middleProfit.intValue());
                 } else {
                     System.out.println("Годовой отчет не загружен!");
                 }
