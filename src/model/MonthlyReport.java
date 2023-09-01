@@ -28,56 +28,47 @@ public class MonthlyReport {
   }
 
   public String profitableProductsOfTheMonth() {
-    double max = 0;
-    String maxItemName = "";
-    Map<String, Double> products = new HashMap<>();
-    List<Transaction> profitTransactions = new ArrayList<>();
-
-    for (Transaction transaction: transactions) {
-      if (!transaction.isExpense()) {
-        profitTransactions.add(transaction);
-      }
-    }
-
-    for (Transaction transaction: profitTransactions) {
-      products.put(
-              transaction.getItemName(), transaction.getQuantity() * transaction.getUnitPrice()
-      );
-    }
-    for (Map.Entry<String, Double> keyValue: products.entrySet()) {
-      if (keyValue.getValue() > max) {
-        maxItemName = keyValue.getKey();
-      }
-    }
-
-    String result = month + " " + maxItemName + " " + products.get(maxItemName);
-    return result;
+    return maxByFilter(false);
   }
 
-  public String expensableProductsOfTheMonth() {
+  public String expensesProductsOfTheMonth() {
+    return maxByFilter(true);
+  }
+
+  public String getMonthName() {
+    if (month.equals("01")) {
+      return "Январь";
+    }
+    if (month.equals("02")) {
+      return "Февраль";
+    } else {
+      return "Март";
+    }
+  }
+
+  private String maxByFilter(boolean isExpense) {
     double max = 0;
     String maxItemName = "";
     Map<String, Double> products = new HashMap<>();
-    List<Transaction> expenseTransactions = new ArrayList<>();
+    List<Transaction> transactionList = new ArrayList<>();
 
     for (Transaction transaction: transactions) {
-      if (transaction.isExpense()) {
-        expenseTransactions.add(transaction);
+      if (transaction.isExpense() == isExpense) {
+        transactionList.add(transaction);
       }
     }
 
-    for (Transaction transaction: expenseTransactions) {
-      products.put(
-              transaction.getItemName(), transaction.getQuantity() * transaction.getUnitPrice()
-      );
+    for (Transaction transaction: transactionList) {
+      products.put(transaction.getItemName(), transaction.getQuantity() * transaction.getUnitPrice());
     }
     for (Map.Entry<String, Double> keyValue: products.entrySet()) {
       if (keyValue.getValue() > max) {
+        max = keyValue.getValue();
         maxItemName = keyValue.getKey();
       }
     }
 
-    String result = month + " " + maxItemName + " " + products.get(maxItemName);
+    String result = "Товар: " + maxItemName + ". Сумма: " + products.get(maxItemName).intValue();
     return result;
   }
 }

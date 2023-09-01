@@ -22,13 +22,13 @@ public class Main {
             } else if (userInput == 2) {
                 yearlyReport = reportEngine.addYearlyReportsList();
             } else if (userInput == 3) {
-                if (monthlyReports == null ) {
+                if (monthlyReports == null) {
                     System.out.println("Месячные отчеты не загржуены!");
                 } else if (yearlyReport == null){
                     System.out.println("Годовой отчет не загружен!");
                 } else {
-                    if (!MonthAndYearReportsCheck.isFillYearlyReport(yearlyReport)
-                            || !MonthAndYearReportsCheck.isFillMonthlyReports(monthlyReports)
+                    if ((!MonthAndYearReportsCheck.isFillYearlyReport(yearlyReport)
+                            || !MonthAndYearReportsCheck.isFillMonthlyReports(monthlyReports))
                             && MonthAndYearReportsCheck.reconciliationOfIncome(yearlyReport, monthlyReports)
                     ) {
                         System.out.println("Отчеты сходятся");
@@ -40,25 +40,25 @@ public class Main {
                 if (monthlyReports != null) {
                     for (MonthlyReport report: monthlyReports) {
                         String maxProfit = report.profitableProductsOfTheMonth();
-                        String maxExpense = report.expensableProductsOfTheMonth();
-                        System.out.println("Название месяца: " + report.getMonth());
-                        System.out.println("Продукт с наибольшим профитом: " + maxProfit);
-                        System.out.println("Продукт с наибольшей растратой: " + maxExpense);
+                        String maxExpense = report.expensesProductsOfTheMonth();
+                        System.out.println("Месяц: " + report.getMonthName());
+                        System.out.println("Максимальный доход. " + maxProfit);
+                        System.out.println("Максимальный расход. " + maxExpense);
                     }
                 } else {
                     System.out.println("Месячные отчеты не загржуены!");
                 }
             } else if (userInput == 5) {
                 if (yearlyReport != null) {
-                    System.out.println("Рассматриваемый год: 2021");
+                    System.out.println("Отчет по 2021 году");
                     Map<String, Double> profitForMoths = yearlyReport.getMontlyProfit();
                     for (Map.Entry<String, Double> entry: profitForMoths.entrySet()) {
-                        System.out.println("Прибыль в месяце: " + entry.getKey() + " " + entry.getValue());
+                        System.out.println("Месяц: " + entry.getKey() + " Прибыль: " + entry.getValue());
                     }
-                    double middleExpense = yearlyReport.getMiddleExpense();
-                    System.out.println("Средний расход за год: " + middleExpense);
-                    double middleProfit = yearlyReport.getMiddleProfit();
-                    System.out.println("Cредняя прибыль за год: " + middleProfit);
+                    Double middleExpense = yearlyReport.getMiddleExpense();
+                    System.out.println("Средний расход за год: " + middleExpense.intValue());
+                    Double middleProfit = yearlyReport.getMiddleProfit();
+                    System.out.println("Cредняя прибыль за год: " + middleProfit.intValue());
                 } else {
                     System.out.println("Годовой отчет не загружен!");
                 }
