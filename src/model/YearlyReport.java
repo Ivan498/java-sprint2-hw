@@ -28,11 +28,12 @@ public class YearlyReport {
                 profitTransactions.add(transaction);
             }
         }
-        for (MonthlyTransaction monthlyTransaction: profitTransactions) {
-            if (!months.containsKey(monthlyTransaction.getMonth())) {
-                months.put(monthlyTransaction.getMonth(), monthlyTransaction.getAmount());
-            } else {
-                months.put(monthlyTransaction.getMonth(), months.get(monthlyTransaction.getMonth()) + monthlyTransaction.getAmount());
+        for (MonthlyTransaction transaction: profitTransactions) {
+            months.put(transaction.getMonth(), transaction.getAmount());
+        }
+        for (MonthlyTransaction transaction: monthlyTransactions) {
+            if (transaction.isExpense()) {
+                months.put(transaction.getMonth(), months.get(transaction.getMonth())- transaction.getAmount());
             }
         }
         return months;
